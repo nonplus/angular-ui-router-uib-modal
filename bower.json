@@ -1,0 +1,18 @@
+{
+  "name": "angular-ui-router-modal",
+  "version": "0.0.1",
+  "homepage": "https://github.com/nonplus/angular-ui-router-modal",
+  "authors": [
+    "Stepan Riha <github@nonplus.net>"
+  ],
+  "description": "AngularJS module that adds support for ui-bootstrap modal states when using ui-router.",
+  "main": "angular-ui-router-title.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
