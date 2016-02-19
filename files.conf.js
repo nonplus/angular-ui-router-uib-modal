@@ -7,7 +7,7 @@ files = {
 	],
 
 	src: [
-		'src/angular-ui-router-modal.js'
+		'src/angular-ui-router-uib-modal.js'
 	],
 
 	test: [

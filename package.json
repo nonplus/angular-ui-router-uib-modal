@@ -1,8 +1,8 @@
 {
-  "name": "angular-ui-router-modal",
+  "name": "angular-ui-router-uib-modal",
   "version": "0.0.1",
   "description": "AngularJS module that adds support for ui-bootstrap modal states when using ui-router.",
-  "main": "angular-ui-router-modal.js",
+  "main": "angular-ui-router-uib-modal.js",
   "directories": {
     "test": "test"
   },
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/nonplus/angular-ui-router-modal.git"
+    "url": "https://github.com/nonplus/angular-ui-router-uib-modal.git"
   },
   "author": "Stepan Riha <github@nonplus.net>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nonplus/angular-ui-router-modal/issues"
+    "url": "https://github.com/nonplus/angular-ui-router-uib-modal/issues"
   },
-  "homepage": "https://github.com/nonplus/angular-ui-router-modal",
+  "homepage": "https://github.com/nonplus/angular-ui-router-uib-modal",
   "devDependencies": {
     "angular": "^1.5",
     "angular-mocks": "^1.5",

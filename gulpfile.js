@@ -56,7 +56,7 @@ gulp.task('tag-version', function() {
 });
 
 gulp.task('build', function() {
-	return gulp.src("src/angular-ui-router-modal.js")
+	return gulp.src("src/angular-ui-router-uib-modal.js")
 		.pipe(wrap({ src: './build.txt' }, { info: require('./package.json') }))
 		.pipe(gulp.dest('.'));
 });

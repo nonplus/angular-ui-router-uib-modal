@@ -1,5 +1,5 @@
-angular-ui-router-modal
-=========================
+angular-ui-router-uib-modal
+===========================
 
 AngularJS module that adds support for ui-bootstrap modal states when using ui-router.
 
@@ -19,12 +19,12 @@ Installing the Module
 ---------------------
 Installation can be done through bower or npm:
 ``` shell
-bower install angular-ui-router-modal
+bower install angular-ui-router-uib-modal
 ```
 
 In your page add:
 ```html
-  <script src="bower_components/angular-ui-router-modal/angular-ui-router-modal.js"></script>
+  <script src="bower_components/angular-ui-router-uib-modal/angular-ui-router-uib-modal.js"></script>
 ```
 
 Loading the Module
