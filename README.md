@@ -74,11 +74,16 @@ $stateProvider
 Caveats
 -------
 
-* Does not work with old versions of UI-Bootstrap *
+**Modal does not have access to parent state's `$scope` values**
+
+The modal's `$scope` doesn't inherit anything from the parent state's scope.  So any
+data that comes from the parent should be specified via `resolve` settings.
+
+**Does not work with old versions of UI-Bootstrap**
 
 The module uses the current `$uibModal` service rather than the deprecated `$modal`.
 
-* Does not work with custom `onEnter` and `onExit` state configurations *
+**Does not work with custom `onEnter` and `onExit` state configurations**
  
 The module works by adding `onEnter` and `onExit` state configurations to modal states.
 If these are already defined in a modal state, an error is thrown.
