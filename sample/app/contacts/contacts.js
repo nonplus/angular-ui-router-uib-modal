@@ -203,7 +203,7 @@ angular.module('uiRouterSample.contacts', [
           // inserted with this state's template.
           url: '/edit',
           templateUrl: 'app/contacts/contacts.detail.item.edit.html',
-          modal: true,
+          modal: ["item"],
           controller: ['$scope', '$state', 'item',
             function (  $scope,   $state,   item) {
               $scope.item = item;
@@ -211,12 +211,7 @@ angular.module('uiRouterSample.contacts', [
                 // Go back up. '^' means up one. '^.^' would be up twice, to the grandparent.
                 $state.go('^');
               };
-            }],
-          resolve: {
-            item: ["item", function(item) {
-              return item;
             }]
-          }
         });
     }
   ]

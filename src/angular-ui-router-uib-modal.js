@@ -18,11 +18,11 @@ angular.module("ui.router.modal", ["ui.router"])
 
 				var modalInstances = [];
 
-				// Get state.resolve configuration
-				var resolve = Object.keys(options.resolve || {});
+				// Get modal.resolve keys from state.modal or state.resolve
+				var resolve = (Array.isArray(options.modal) ? options.modal : []).concat(Object.keys(options.resolve || {}));
 
-				var inject = ["$uibModal", "$state", "$rootScope"];
-				options.onEnter = function($uibModal, $state, $rootScope) {
+				var inject = ["$uibModal", "$state"];
+				options.onEnter = function($uibModal, $state) {
 
 					// Add resolved values to modal options
 					if (resolve.length) {

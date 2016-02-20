@@ -37,10 +37,13 @@ var app = angular.module('myApp', ['ng', 'ui.router', 'ui.bootstrap', 'ui.router
 ```
 
 Specifying modal states
----------------------------------------------
+-----------------------
 
 Adding a `modal: true` to a state definition causes its template to be opened through a call to
  `$uibModal.open(stateDefinition)` rather than embedding it inside of a `<ui-view/>`.
+ 
+To specify which resolved state values are available to the modal controller, use an array instead of `true`,
+e.g. `modal: ['value1', 'value2']`.
 
 Inside the modal state controller, the modal via can be closed via `$uibModalInstance.close/dismiss()` or by 
 transitioning to the parent state via `$state.go('^')`.
@@ -79,6 +82,35 @@ Caveats
 The modal's `$scope` doesn't inherit anything from the parent state's scope.  So any
 data that comes from the parent should be specified via `resolve` settings.
 
+**You must specify resolved parent state values to provide to the modal controller**
+
+By default, `$uibModal.open()` is called with only the resolved values of the modal state.  If you want to include
+values resolved in parent states, use an array instead of `true` for the `modal` setting.
+
+In the following examples, `$uibModal.open()` for the `parent.child` state will be called with resolved values
+`a`, `b`, `x`, `y` and `z`.
+
+```
+$stateProvider
+  .state('parent', {
+    ...
+    resolve: {
+      a: ...,
+      b: ...,
+      c: ...
+    }
+  })
+  .state('parent.child', {
+    ...
+    modal: ['a', 'b'],
+    resolve: {
+      x: ...,
+      y: ...,
+      z: ...
+    }
+  })
+```
+                                   
 **Does not work with old versions of UI-Bootstrap**
 
 The module uses the current `$uibModal` service rather than the deprecated `$modal`.
