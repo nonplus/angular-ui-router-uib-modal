@@ -1,6 +1,6 @@
 {
   "name": "angular-ui-router-uib-modal",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "AngularJS module that adds support for ui-bootstrap modal states when using ui-router.",
   "main": "angular-ui-router-uib-modal.js",
   "directories": {

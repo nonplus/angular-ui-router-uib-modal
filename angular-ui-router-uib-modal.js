@@ -3,7 +3,7 @@
  *
  * @link https://github.com/nonplus/angular-ui-router-uib-modal
  *
- * @license angular-ui-router-uib-modal v0.0.2
+ * @license angular-ui-router-uib-modal v0.0.3
  * (c) Copyright Stepan Riha <github@nonplus.net>
  * License MIT
  */
@@ -28,13 +28,13 @@ angular.module("ui.router.modal", ["ui.router"])
 					throw new Error("Invalid modal state definition: The onExit setting may not be specified.");
 				}
 
-				var modalInstances = [];
+				var modalInstance;
 
-				// Get state.resolve configuration
-				var resolve = Object.keys(options.resolve || {});
+				// Get modal.resolve keys from state.modal or state.resolve
+				var resolve = (Array.isArray(options.modal) ? options.modal : []).concat(Object.keys(options.resolve || {}));
 
-				var inject = ["$uibModal", "$state", "$rootScope"];
-				options.onEnter = function($uibModal, $state, $rootScope) {
+				var inject = ["$uibModal", "$state"];
+				options.onEnter = function($uibModal, $state) {
 
 					// Add resolved values to modal options
 					if (resolve.length) {
@@ -44,9 +44,7 @@ angular.module("ui.router.modal", ["ui.router"])
 						}
 					}
 
-					var modalInstance = $uibModal.open(options);
-
-					modalInstances.push(modalInstance);
+					modalInstance = $uibModal.open(options);
 
 					modalInstance.result['finally'](function() {
 						if (modalInstances.indexOf(modalInstance) >= 0) {
@@ -60,10 +58,10 @@ angular.module("ui.router.modal", ["ui.router"])
 				options.onEnter.$inject = inject.concat(resolve);
 
 				options.onExit = function() {
-					var modalInstance = modalInstances.pop();
 					if (modalInstance) {
 						// State has changed while dialog was open
 						modalInstance.close();
+						modalInstance = null;
 					}
 				};
 
