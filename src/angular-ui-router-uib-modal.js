@@ -16,7 +16,7 @@ angular.module("ui.router.modal", ["ui.router"])
 					throw new Error("Invalid modal state definition: The onExit setting may not be specified.");
 				}
 
-				var modalInstances = [];
+				var modalInstance;
 
 				// Get modal.resolve keys from state.modal or state.resolve
 				var resolve = (Array.isArray(options.modal) ? options.modal : []).concat(Object.keys(options.resolve || {}));
@@ -32,9 +32,7 @@ angular.module("ui.router.modal", ["ui.router"])
 						}
 					}
 
-					var modalInstance = $uibModal.open(options);
-
-					modalInstances.push(modalInstance);
+					modalInstance = $uibModal.open(options);
 
 					modalInstance.result['finally'](function() {
 						if (modalInstances.indexOf(modalInstance) >= 0) {
@@ -48,10 +46,10 @@ angular.module("ui.router.modal", ["ui.router"])
 				options.onEnter.$inject = inject.concat(resolve);
 
 				options.onExit = function() {
-					var modalInstance = modalInstances.pop();
 					if (modalInstance) {
 						// State has changed while dialog was open
 						modalInstance.close();
+						modalInstance = null;
 					}
 				};
 
