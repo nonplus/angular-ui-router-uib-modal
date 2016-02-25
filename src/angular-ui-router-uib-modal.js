@@ -35,7 +35,7 @@ angular.module("ui.router.modal", ["ui.router"])
 					modalInstance = $uibModal.open(options);
 
 					modalInstance.result['finally'](function() {
-						if (modalInstances.indexOf(modalInstance) >= 0) {
+						if (modalInstance) {
 							// Dialog was closed via $uibModalInstance.close/dismiss, adjust state accordingly
 							$state.go('^');
 						}
