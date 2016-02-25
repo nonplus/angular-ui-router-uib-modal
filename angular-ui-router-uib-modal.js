@@ -3,7 +3,7 @@
  *
  * @link https://github.com/nonplus/angular-ui-router-uib-modal
  *
- * @license angular-ui-router-uib-modal v0.0.3
+ * @license angular-ui-router-uib-modal v0.0.4
  * (c) Copyright Stepan Riha <github@nonplus.net>
  * License MIT
  */
@@ -47,7 +47,7 @@ angular.module("ui.router.modal", ["ui.router"])
 					modalInstance = $uibModal.open(options);
 
 					modalInstance.result['finally'](function() {
-						if (modalInstances.indexOf(modalInstance) >= 0) {
+						if (modalInstance) {
 							// Dialog was closed via $uibModalInstance.close/dismiss, adjust state accordingly
 							$state.go('^');
 						}
