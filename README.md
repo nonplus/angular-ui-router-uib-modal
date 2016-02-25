@@ -1,6 +1,8 @@
 angular-ui-router-uib-modal
 ===========================
 
+[![Build Status](https://travis-ci.org/nonplus/angular-ui-router-uib-modal.svg?branch=master)](https://travis-ci.org/nonplus/angular-ui-router-uib-modal)
+
 AngularJS module that adds support for ui-bootstrap modal states when using ui-router.
 
 Motivation
