@@ -15,17 +15,21 @@ describe('angular-ui-router-uib-modal', function() {
 	//	jasmine.spyOn($uibModal, "open");
 	//}));
 
-	var baseVal1, modalChildVal1, modalTemplate, injected, modalClosing;
+	var baseVal1, baseVal2, baseVal3, modalChildVal1, modalTemplate, injected, modalClosing;
 
 	beforeEach(module(function($stateProvider) {
 		baseVal1 = {};
+		baseVal2 = ["one", 2, "three"];
+		baseVal3 = function() { throw new Error("This shouldn't be called!"); };
 		modalChildVal1 = {};
 		modalTemplate = "modalChild: <ui-view></ui-view>";
 
 		$stateProvider.state('base', {
 			template: "<ui-view></ui-view>",
 			resolve: {
-				base1: function() { return baseVal1; }
+				base1: function() { return baseVal1; },
+				base2: function() { return baseVal2; },
+				base3: function() { return baseVal3; }
 			}
 		});
 
@@ -36,12 +40,14 @@ describe('angular-ui-router-uib-modal', function() {
 		});
 
 		$stateProvider.state('base.modalChild', {
-			modal: ["base1"],
+			modal: ["base1", "base2", "base3"],
 			template: modalTemplate,
 			//controller: "ModalStateCtrl",
-			controller: function(base1, modalChild1, $scope) {
+			controller: function(base1, base2, base3, modalChild1, $scope) {
 				injected = {
 					base1: base1,
+					base2: base2,
+					base3: base3,
 					modalChild1: modalChild1,
 					$scope: $scope
 				};
@@ -87,6 +93,8 @@ describe('angular-ui-router-uib-modal', function() {
 			spyOn($uibModal, "open").and.callThrough();
 			$state.go("base.modalChild"); $rootScope.$digest();
 			expect(injected.base1).toBe(baseVal1);
+			expect(injected.base2).toBe(baseVal2);
+			expect(injected.base3).toBe(baseVal3);
 		}));
 
 	});

@@ -28,7 +28,7 @@ angular.module("ui.router.modal", ["ui.router"])
 					if (resolve.length) {
 						options.resolve = {};
 						for(var i = 0; i < resolve.length; i++) {
-							options.resolve[resolve[i]] = arguments[inject.length + i];
+							options.resolve[resolve[i]] = injectedConstant(arguments[inject.length + i]);
 						}
 					}
 
@@ -58,3 +58,7 @@ angular.module("ui.router.modal", ["ui.router"])
 			return stateProviderState.call($stateProvider, stateName, options);
 		};
 	}]);
+
+function injectedConstant(val) {
+	return [function() { return val; }];
+}
