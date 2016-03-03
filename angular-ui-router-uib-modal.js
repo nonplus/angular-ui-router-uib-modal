@@ -3,7 +3,7 @@
  *
  * @link https://github.com/nonplus/angular-ui-router-uib-modal
  *
- * @license angular-ui-router-uib-modal v0.0.4
+ * @license angular-ui-router-uib-modal v0.0.5
  * (c) Copyright Stepan Riha <github@nonplus.net>
  * License MIT
  */
@@ -40,7 +40,7 @@ angular.module("ui.router.modal", ["ui.router"])
 					if (resolve.length) {
 						options.resolve = {};
 						for(var i = 0; i < resolve.length; i++) {
-							options.resolve[resolve[i]] = arguments[inject.length + i];
+							options.resolve[resolve[i]] = injectedConstant(arguments[inject.length + i]);
 						}
 					}
 
@@ -70,6 +70,10 @@ angular.module("ui.router.modal", ["ui.router"])
 			return stateProviderState.call($stateProvider, stateName, options);
 		};
 	}]);
+
+function injectedConstant(val) {
+	return [function() { return val; }];
+}
 
 
 })(window.angular);
