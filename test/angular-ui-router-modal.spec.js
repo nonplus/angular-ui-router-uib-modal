@@ -15,7 +15,7 @@ describe('angular-ui-router-uib-modal', function() {
 	//	jasmine.spyOn($uibModal, "open");
 	//}));
 
-	var baseVal1, baseVal2, baseVal3, modalChildVal1, modalTemplate, injected, modalClosing;
+	var baseVal1, baseVal2, baseVal3, modalChildVal1, modalTemplate, injected, modalClosing, baseResolve;
 
 	beforeEach(module(function($stateProvider) {
 		baseVal1 = {};
@@ -23,11 +23,16 @@ describe('angular-ui-router-uib-modal', function() {
 		baseVal3 = function() { throw new Error("This shouldn't be called!"); };
 		modalChildVal1 = {};
 		modalTemplate = "modalChild: <ui-view></ui-view>";
+		baseResolve = jasmine.createSpy("base1").and.returnValue(baseVal1);
 
 		$stateProvider.state('base', {
 			template: "<ui-view></ui-view>",
+			params: {
+				a: "",
+				b: ""
+			},
 			resolve: {
-				base1: function() { return baseVal1; },
+				base1: baseResolve,
 				base2: function() { return baseVal2; },
 				base3: function() { return baseVal3; }
 			}
@@ -143,10 +148,23 @@ describe('angular-ui-router-uib-modal', function() {
 
 	describe("closing modal", function() {
 		it("should exit modal state", inject(function($state, $rootScope, $uibModal) {
-			$state.go("base.modalChild"); $rootScope.$digest();
+			$state.go("base.modalChild", { a: "someValue" }); $rootScope.$digest();
 			expect($state.current.name).toEqual('base.modalChild');
+			baseResolve.calls.reset();
 			injected.$scope.$close(); $rootScope.$digest();
 			expect($state.current.name).toEqual('base');
+			expect(baseResolve.calls.count()).toBe(0);
+		}));
+	});
+
+	describe("closing modal from nested state", function() {
+		it("should go to parent state", inject(function($state, $rootScope, $uibModal) {
+			$state.go("base.modalChild.grandChild", { a: "someValue" }); $rootScope.$digest();
+			expect($state.current.name).toEqual('base.modalChild.grandChild');
+			baseResolve.calls.reset();
+			injected.$scope.$close(); $rootScope.$digest();
+			expect($state.current.name).toEqual('base');
+			expect(baseResolve.calls.count()).toBe(0);
 		}));
 	});
 });
