@@ -6,7 +6,7 @@
     "Stepan Riha <github@nonplus.net>"
   ],
   "description": "AngularJS module that adds support for ui-bootstrap modal states when using ui-router.",
-  "main": "angular-ui-router-modal.js",
+  "main": "./angular-ui-router-uib-modal.js",
   "license": "MIT",
   "ignore": [
     "**/.*",
