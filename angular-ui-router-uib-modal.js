@@ -3,7 +3,7 @@
  *
  * @link https://github.com/nonplus/angular-ui-router-uib-modal
  *
- * @license angular-ui-router-uib-modal v0.0.7
+ * @license angular-ui-router-uib-modal v0.0.8
  * (c) Copyright Stepan Riha <github@nonplus.net>
  * License MIT
  */
