@@ -1,0 +1,17 @@
+{
+  "extends": "eslint:recommended",
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "no-console": "error",
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "semi": ["error", "always"],
+    "block-scoped-var": "error",
+    "eqeqeq": "error",
+    "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
+    "space-before-function-paren": ["error", "never"],
+    "space-in-parens": ["error", "never"],
+    "comma-spacing": ["error", { "before": false, "after": true }]
+  }
+}

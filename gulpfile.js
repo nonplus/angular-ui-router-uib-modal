@@ -4,6 +4,7 @@ var git = require('gulp-git');
 var bump = require('gulp-bump');
 var filter = require('gulp-filter');
 var tag_version = require('gulp-tag-version');
+var eslint = require("gulp-eslint");
 var runSequence = require('run-sequence');
 var wrap = require("gulp-wrap");
 var gutil = require('gulp-util');
@@ -81,7 +82,7 @@ gulp.task('demo', ['serve'], function() {
 	require('open')('http://localhost:' + port);
 });
 
-gulp.task('test', function() {
+gulp.task('test', ['lint'], function() {
 	// Be sure to return the stream
 	return gulp.src(testFiles)
 		.pipe(karma({
@@ -100,4 +101,18 @@ gulp.task('watch', function() {
 			configFile: 'karma.conf.js',
 			action: 'watch'
 		}));
+});
+
+gulp.task('lint', function () {
+	return gulp.src([
+		"./src/**/*.js",
+		"./test/**/*.js"
+	])
+		.pipe(eslint())
+		// eslint.format() outputs the lint results to the console.
+		// Alternatively use eslint.formatEach() (see Docs).
+		.pipe(eslint.format())
+		// To have the process exit with an error code (1) on
+		// lint error, return the stream and pipe to failAfterError last.
+		.pipe(eslint.failAfterError());
 });

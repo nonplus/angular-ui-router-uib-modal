@@ -1,10 +1,11 @@
+/* global angular */
 "use strict";
 angular.module("ui.router.modal", ["ui.router"])
 	.config(["$stateProvider", function($stateProvider) {
 
 		var stateProviderState = $stateProvider.state;
 
-		$stateProvider.state = function (stateName, options) {
+		$stateProvider.state = function(stateName, options) {
 
 			if (options.modal) {
 

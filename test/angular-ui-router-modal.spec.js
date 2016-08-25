@@ -1,19 +1,10 @@
+/* global describe, beforeEach, it, module, inject, expect, spyOn, jasmine */
+"use strict";
 describe('angular-ui-router-uib-modal', function() {
-
-	var $stateProvider, $uibModal;
 
 	beforeEach(module('ui.router.modal'));
 
-	beforeEach(module('ui.router', function(_$stateProvider_) {
-		$stateProvider = _$stateProvider_;
-	}));
-
 	beforeEach(module('ui.bootstrap'));
-
-	//beforeEach(module('ui.bootstrap', function(_$uibModal_) {
-	//	$uibModal = _$uibModal_;
-	//	jasmine.spyOn($uibModal, "open");
-	//}));
 
 	var baseVal1, baseVal2, baseVal3, modalChildVal1, modalTemplate, injected, modalClosing, baseResolve;
 
@@ -127,7 +118,7 @@ describe('angular-ui-router-uib-modal', function() {
 	});
 
 	describe("exiting modal state", function() {
-		it("should close modal", inject(function($state, $rootScope, $uibModal) {
+		it("should close modal", inject(function($state, $rootScope) {
 			$state.go("base.modalChild"); $rootScope.$digest();
 			expect($state.current.name).toEqual('base.modalChild');
 			$state.go("^"); $rootScope.$digest();
@@ -137,7 +128,7 @@ describe('angular-ui-router-uib-modal', function() {
 	});
 
 	describe("going to unrelated state", function() {
-		it("should close modal", inject(function($state, $rootScope, $uibModal) {
+		it("should close modal", inject(function($state, $rootScope) {
 			$state.go("base.modalChild.grandChild"); $rootScope.$digest();
 			expect($state.current.name).toEqual('base.modalChild.grandChild');
 			$state.go("unrelated"); $rootScope.$digest();
@@ -147,7 +138,7 @@ describe('angular-ui-router-uib-modal', function() {
 	});
 
 	describe("closing modal", function() {
-		it("should exit modal state", inject(function($state, $rootScope, $uibModal) {
+		it("should exit modal state", inject(function($state, $rootScope) {
 			$state.go("base.modalChild", { a: "someValue" }); $rootScope.$digest();
 			expect($state.current.name).toEqual('base.modalChild');
 			baseResolve.calls.reset();
@@ -158,7 +149,7 @@ describe('angular-ui-router-uib-modal', function() {
 	});
 
 	describe("closing modal from nested state", function() {
-		it("should go to parent state", inject(function($state, $rootScope, $uibModal) {
+		it("should go to parent state", inject(function($state, $rootScope) {
 			$state.go("base.modalChild.grandChild", { a: "someValue" }); $rootScope.$digest();
 			expect($state.current.name).toEqual('base.modalChild.grandChild');
 			baseResolve.calls.reset();
