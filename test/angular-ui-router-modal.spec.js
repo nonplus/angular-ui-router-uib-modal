@@ -38,13 +38,17 @@ describe('angular-ui-router-uib-modal', function() {
 		$stateProvider.state('base.modalChild', {
 			modal: ["base1", "base2", "base3"],
 			template: modalTemplate,
+			params: {
+				x: ""
+			},
 			//controller: "ModalStateCtrl",
-			controller: function(base1, base2, base3, modalChild1, $scope) {
+			controller: function(base1, base2, base3, modalChild1, $scope, $stateParams) {
 				injected = {
 					base1: base1,
 					base2: base2,
 					base3: base3,
 					modalChild1: modalChild1,
+					x: $stateParams.x,
 					$scope: $scope
 				};
 				modalClosing = jasmine.createSpy();
@@ -94,6 +98,22 @@ describe('angular-ui-router-uib-modal', function() {
 		}));
 
 	});
+
+	describe("entering same modal state with changed parameters", function() {
+
+		it("should properly transition", inject(function($state, $rootScope) {
+			// Go to base.modalChild with x=a
+			$state.go("base.modalChild", { x: "a" }); $rootScope.$digest();
+			expect($state.current.name).toEqual('base.modalChild');
+			expect(injected.x).toBe("a");
+
+			// Go to base.modalChild with x=b
+			$state.go("base.modalChild", { x: "b" }); $rootScope.$digest();
+			expect($state.current.name).toEqual('base.modalChild');
+			expect(injected.x).toBe("b");
+		}));
+
+	}); // entering same modal state with changed parameters
 
 	describe("entering nested state from modal", function() {
 		it("should not re-open modal", inject(function($state, $rootScope, $uibModal) {
