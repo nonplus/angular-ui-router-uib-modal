@@ -45,14 +45,28 @@ angular.module("ui.router.modal", ["ui.router"])
 						}
 					}
 
-					var thisModal = openModal = $uibModal.open(options);
+					var openModalFunc = function () {
+						var thisModal = openModal = $uibModal.open(options);
 
-					openModal.result['finally'](function() {
-						if (thisModal === openModal) {
-							// Dialog was closed via $uibModalInstance.close/dismiss, go to our parent state
-							$state.go($state.get("^", stateName).name);
-						}
-					});
+						openModal.result['finally'](function() {
+							if (thisModal === openModal) {
+								// Dialog was closed via $uibModalInstance.close/dismiss, go to our parent state
+								$state.go($state.get("^", stateName).name);
+							}
+						});
+
+					}
+
+
+					if (options.templateProvider) {
+						options.templateProvider().then(function (template) {
+							options.template = template;
+							openModalFunc();
+						})
+					}
+					else {
+						openModalFunc();
+					}
 				};
 
 				// Make sure that onEnter receives state.resolve configuration
