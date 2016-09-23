@@ -7,6 +7,12 @@ angular.module("ui.router.modal", ["ui.router"])
 
 		$stateProvider.state = function(stateName, options) {
 
+			// check for $stateProvider.state({name: "state", ...}) usage
+			if (angular.isObject(stateName)) {
+				options = stateName;
+				stateName = options.name;
+			}
+
 			if (options.modal) {
 
 				if (options.onEnter) {

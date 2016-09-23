@@ -59,7 +59,8 @@ describe('angular-ui-router-uib-modal', function() {
 			}
 		});
 
-		$stateProvider.state('base.modalChild.grandChild', {
+		$stateProvider.state({
+			name: 'base.modalChild.grandChild',
 			template: "grandChild"
 		});
 
