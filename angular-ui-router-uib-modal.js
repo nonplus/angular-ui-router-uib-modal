@@ -3,7 +3,7 @@
  *
  * @link https://github.com/nonplus/angular-ui-router-uib-modal
  *
- * @license angular-ui-router-uib-modal v0.0.9
+ * @license angular-ui-router-uib-modal v0.0.10
  * (c) Copyright Stepan Riha <github@nonplus.net>
  * License MIT
  */
@@ -18,6 +18,12 @@ angular.module("ui.router.modal", ["ui.router"])
 		var stateProviderState = $stateProvider.state;
 
 		$stateProvider.state = function(stateName, options) {
+
+			// check for $stateProvider.state({name: "state", ...}) usage
+			if (angular.isObject(stateName)) {
+				options = stateName;
+				stateName = options.name;
+			}
 
 			if (options.modal) {
 
