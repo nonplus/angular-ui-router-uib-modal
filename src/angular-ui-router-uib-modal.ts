@@ -1,16 +1,26 @@
-/* global angular */
 "use strict";
+
 angular.module("ui.router.modal", ["ui.router"])
-	.config(["$stateProvider", function($stateProvider) {
+	.config(["$stateProvider", function($stateProvider: angular.ui.IStateProvider) {
 
-		var stateProviderState = $stateProvider.state;
+		let stateProviderState = $stateProvider.state;
 
-		$stateProvider.state = function(stateName, options) {
+		$stateProvider["state"] = state as any;
+
+		function state(name: string, config: angular.ui.IState): angular.ui.IStateProvider
+		function state(config: angular.ui.IStateProvider): angular.ui.IStateProvider
+		function state(name: any, config?: angular.ui.IState): angular.ui.IStateProvider {
+
+			var stateName: string;
+			var options: angular.ui.IState;
 
 			// check for $stateProvider.state({name: "state", ...}) usage
-			if (angular.isObject(stateName)) {
-				options = stateName;
+			if (angular.isObject(name)) {
+				options = name;
 				stateName = options.name;
+			} else {
+				options = config;
+				stateName = name;
 			}
 
 			if (options.modal) {
@@ -23,23 +33,23 @@ angular.module("ui.router.modal", ["ui.router"])
 					throw new Error("Invalid modal state definition: The onExit setting may not be specified.");
 				}
 
-				var openModal;
+				let openModal: angular.ui.bootstrap.IModalServiceInstance;
 
 				// Get modal.resolve keys from state.modal or state.resolve
-				var resolve = (Array.isArray(options.modal) ? options.modal : []).concat(Object.keys(options.resolve || {}));
+				let resolve = (Array.isArray(options.modal) ? options.modal as string[] : [] as string[]).concat(Object.keys(options.resolve || {}));
 
-				var inject = ["$uibModal", "$state"];
-				options.onEnter = function($uibModal, $state) {
+				let inject = ["$uibModal", "$state"];
+				options.onEnter = function($uibModal: angular.ui.bootstrap.IModalService, $state: angular.ui.IStateService) {
 
 					// Add resolved values to modal options
 					if (resolve.length) {
 						options.resolve = {};
-						for(var i = 0; i < resolve.length; i++) {
+						for (let i = 0; i < resolve.length; i++) {
 							options.resolve[resolve[i]] = injectedConstant(arguments[inject.length + i]);
 						}
 					}
 
-					var thisModal = openModal = $uibModal.open(options);
+					let thisModal = openModal = $uibModal.open(options as angular.ui.bootstrap.IModalSettings);
 
 					openModal.result['finally'](function() {
 						if (thisModal === openModal) {
@@ -50,7 +60,7 @@ angular.module("ui.router.modal", ["ui.router"])
 				};
 
 				// Make sure that onEnter receives state.resolve configuration
-				options.onEnter.$inject = inject.concat(resolve);
+				options.onEnter["$inject"] = inject.concat(resolve);
 
 				options.onExit = function() {
 					if (openModal) {
@@ -63,9 +73,9 @@ angular.module("ui.router.modal", ["ui.router"])
 			}
 
 			return stateProviderState.call($stateProvider, stateName, options);
-		};
+		}
 	}]);
 
-function injectedConstant(val) {
+function injectedConstant<T>(val: T): [() => T] {
 	return [function() { return val; }];
 }

@@ -4,7 +4,7 @@ var git = require('gulp-git');
 var bump = require('gulp-bump');
 var filter = require('gulp-filter');
 var tag_version = require('gulp-tag-version');
-var eslint = require("gulp-eslint");
+var tslint = require("gulp-tslint");
 var runSequence = require('run-sequence');
 var wrap = require("gulp-wrap");
 var gutil = require('gulp-util');
@@ -35,7 +35,7 @@ gulp.task('push-changes', function (cb) {
 	git.push('origin', 'master', cb);
 });
 
-gulp.task('release', ['test'], function (callback) {
+gulp.task('release', ['ts-compile', 'test'], function (callback) {
 	runSequence(
 		'bump-version',
 		'build',
@@ -56,9 +56,17 @@ gulp.task('tag-version', function() {
 		.pipe(tag_version());
 });
 
-gulp.task('build', function() {
+gulp.task('build', ['ts-compile'], function() {
 	return gulp.src("src/angular-ui-router-uib-modal.js")
 		.pipe(wrap({ src: './build.txt' }, { info: require('./package.json') }))
+		.pipe(gulp.dest('.'));
+});
+
+gulp.task('ts-compile', function() {
+	var ts = require('gulp-typescript');
+	var tsProject = ts.createProject('tsconfig.json');
+	return tsProject.src(['src/**/*.ts', 'test/**/*.ts'])
+		.pipe(tsProject()).js
 		.pipe(gulp.dest('.'));
 });
 
@@ -105,14 +113,11 @@ gulp.task('watch', function() {
 
 gulp.task('lint', function () {
 	return gulp.src([
-		"./src/**/*.js",
-		"./test/**/*.js"
+		"./src/**/*.ts",
+		"./test/**/*.ts"
 	])
-		.pipe(eslint())
-		// eslint.format() outputs the lint results to the console.
-		// Alternatively use eslint.formatEach() (see Docs).
-		.pipe(eslint.format())
-		// To have the process exit with an error code (1) on
-		// lint error, return the stream and pipe to failAfterError last.
-		.pipe(eslint.failAfterError());
+		.pipe(tslint({
+			formatter: "verbose"
+		}))
+		.pipe(tslint.report());
 });
