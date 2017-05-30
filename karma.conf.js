@@ -16,6 +16,12 @@ module.exports = function (karma) {
 			"**/*.ts": ["karma-typescript"]
 		},
 
+		karmaTypescriptConfig: {
+			bundlerOptions: {
+				addNodeGlobals: false
+			}
+		},
+
 		reporters: ["progress", "karma-typescript"],
 
 		// level of logging
