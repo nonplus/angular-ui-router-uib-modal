@@ -23,7 +23,10 @@
   },
   "homepage": "https://github.com/nonplus/angular-ui-router-uib-modal",
   "devDependencies": {
+    "@types/angular": "^1.5",
     "@types/angular-mocks": "^1.5",
+    "@types/angular-ui-bootstrap": "^0.13",
+    "@types/angular-ui-router": "^1.1",
     "@types/jasmine": "^2.5.35",
     "angular": "^1.5",
     "angular-mocks": "^1.5",
@@ -52,8 +55,5 @@
     "typescript": "^2.0.3"
   },
   "dependencies": {
-    "@types/angular": "^1.5",
-    "@types/angular-ui-bootstrap": "^0.13",
-    "@types/angular-ui-router": "^1.1"
   }
 }
