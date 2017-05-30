@@ -1,4 +1,4 @@
-"use strict";
+import angular = require("angular");
 
 let mock = angular.mock;
 type IStateService = ng.ui.IStateService;

@@ -9,7 +9,6 @@ var runSequence = require('run-sequence');
 var wrap = require("gulp-wrap");
 var gutil = require('gulp-util');
 var serve = require('gulp-serve');
-var karma = require('gulp-karma');
 var files = require('./files.conf');
 var testFiles = [].concat(files.libs, files.src, files.test);
 
@@ -90,25 +89,19 @@ gulp.task('demo', ['serve'], function() {
 	require('open')('http://localhost:' + port);
 });
 
-gulp.task('test', ['lint'], function() {
-	// Be sure to return the stream
-	return gulp.src(testFiles)
-		.pipe(karma({
-			configFile: 'karma.conf.js',
-			action: 'run'
-		}))
-		.on('error', function(err) {
-			// Make sure failed tests cause gulp to exit non-zero
-			throw err;
-		});
+gulp.task('test', ['lint'], function (done) {
+	var Server = require('karma').Server;
+	new Server({
+		configFile: __dirname + '/karma.conf.js',
+		singleRun: true
+	}, done).start();
 });
 
-gulp.task('watch', function() {
-	gulp.src(testFiles)
-		.pipe(karma({
-			configFile: 'karma.conf.js',
-			action: 'watch'
-		}));
+gulp.task('watch', function (done) {
+	var Server = require('karma').Server;
+	new Server({
+		configFile: __dirname + '/karma.conf.js'
+	}, done).start();
 });
 
 gulp.task('lint', function () {
