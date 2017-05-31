@@ -7,10 +7,22 @@ module.exports = function (karma) {
 		// base path, that will be used to resolve files and exclude
 		basePath: '.',
 
-		frameworks: ['jasmine'],
+		frameworks: ['jasmine', 'karma-typescript'],
 
 		// list of files / patterns to load in the browser
 		files: [].concat(files.libs, files.src, files.test),
+
+		preprocessors: {
+			"**/*.ts": ["karma-typescript"]
+		},
+
+		karmaTypescriptConfig: {
+			bundlerOptions: {
+				addNodeGlobals: false
+			}
+		},
+
+		reporters: ["progress", "karma-typescript"],
 
 		// level of logging
 		// possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG

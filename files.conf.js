@@ -7,12 +7,12 @@ files = {
 	],
 
 	src: [
-		'src/angular-ui-router-uib-modal.js'
+		'src/angular-ui-router-uib-modal.ts'
 	],
 
 	test: [
 		'node_modules/angular-mocks/angular-mocks.js',
-		'test/*.spec.js'
+		'test/*.spec.ts'
 	]
 };
 
